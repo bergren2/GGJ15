@@ -16,8 +16,17 @@ function RoadNetwork ($game) {
     return roads;
   };
 
-  this.coordsOnRoad = function (coords) {
-    return true; // TODO temp
+  this.coordsOnRoad = function (realCoords) {
+    var c, d, i;
+    for (i = 0; i < roads.length; i++) {
+      c = roads[i].getCoords();
+      d = roads[i].getDirection();
+      if (d === 0 && c[1] === realCoords.grid[1] ||
+          d === 1 && c[0] === realCoords.grid[0]) {
+        return true; // above not quite right
+      }
+    }
+    return false;
   };
 
   this.size = function () {
@@ -29,8 +38,9 @@ function Road ($game, coords) {
   var direction = Math.floor(Math.random() * 2);
   var gridCoords = coords.grid;
 
-  var $dom = $('<div></div>').addClass('road').width(P).height(P)
-                              .css('left', coords.grid[0]).css('top', coords.grid[1]);
+  var $dom = $('<div></div>').addClass('road')
+               .width(P).height(P)
+               .css('left', coords.grid[0]).css('top', coords.grid[1]);
   $game.append($dom);
 
   if (direction === 0) {
@@ -43,8 +53,13 @@ function Road ($game, coords) {
     }, DELAY);
   }
 
+  // methods
   this.getCoords = function () {
     return gridCoords;
+  };
+
+  this.getDirection = function () {
+    return direction;
   };
 
   this.getDom = function () {

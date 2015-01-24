@@ -7,6 +7,15 @@ function blockCeil (num) {
   return blockFloor(num) + P;
 }
 
+function chooseColor (type) {
+  var base = ['blue', 'red'];
+  var i;
+  if (type === 'base') {
+    i = Math.floor(Math.random() * 2);
+    return base[i];
+  }
+}
+
 function Coords (realCoords) {
   var gridCoords = [blockFloor(realCoords[0]), blockFloor(realCoords[1])];
   return {

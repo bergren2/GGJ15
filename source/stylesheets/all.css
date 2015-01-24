@@ -5,8 +5,27 @@
   position: fixed;
 }
 
+#game > div {
+  position: fixed;
+}
+
 .road {
   background: black;
-  position: fixed;
   transition: height 2s ease-out, width 2s ease-out, top 2s ease-out, left 2s ease-out;
+}
+
+.cab {
+  background: yellow;
+}
+
+.blue {
+  background: blue;
+}
+
+.red {
+  background: red;
+}
+
+.yellow {
+  background: yellow;
 }
