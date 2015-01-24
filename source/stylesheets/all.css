@@ -8,5 +8,5 @@
 .road {
   background: black;
   position: fixed;
-  transition: height 5s ease, width 5s ease, top 5s ease, left 5s ease;
+  transition: height 2s ease-out, width 2s ease-out, top 2s ease-out, left 2s ease-out;
 }
