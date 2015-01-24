@@ -2,7 +2,7 @@
 //= require jquery
 
 // global vars
-var P = 10; // block width in pixels
+var P = 20; // block width in pixels
 
 // floors the number based on the block sizes in the grid
 function blockFloor (num) {
@@ -14,7 +14,7 @@ function coordsOf (e, $el) {
   var offset = $el.offset();
   var x = e.clientX - offset.left;
   var y = e.clientY - offset.top;
-  return [x, y];
+  return [blockFloor(x), blockFloor(y)];
 }
 
 // creates a road element in the game
