@@ -1,0 +1,13 @@
+{
+  "name": "GGJ15",
+  "version": "0.0.0",
+  "homepage": "https://apps.heymrbass.com/ggj15",
+  "authors": [
+    "bergren2 <dan@heymrbass.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}
