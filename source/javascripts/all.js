@@ -2,7 +2,10 @@
 //= require jquery
 
 // global vars
-var P = 20; // block width in pixels
+var P = 20,          // block width in pixels
+    DELAY = 1000,    // delay of animations in milliseconds
+    WINDOW_W = null,
+    WINDOW_H = null;
 
 // floors the number based on the block sizes in the grid
 function blockFloor (num) {
@@ -20,26 +23,28 @@ function coordsOf (e, $el) {
 // creates a road element in the game
 function createRoad ($game, coords) {
   var direction = Math.floor(Math.random() * 2);
-  if (direction === 0) {
-    console.log('horizontal');
-  } else {
-    console.log('vertical');
-  }
-
   var $road = $('<div></div>').addClass('road').width(P).height(P)
                               .css('left', coords[0]).css('top', coords[1]);
   $game.append($road);
+
+  if (direction === 0) {
+    window.setTimeout(function () {
+      $road.css('left', '0').width(WINDOW_W);
+  }, DELAY);
+  } else {
+    window.setTimeout(function () {
+      $road.css('top', '0').height(WINDOW_H);
+    }, DELAY);
+  }
 }
 
 // load the game
 $(document).ready(function () {
-  var w = $(document).width();
-  var h = $(document).height();
+  WINDOW_W = blockFloor($(document).width());
+  WINDOW_H = blockFloor($(document).height());
 
-  w = blockFloor(w);
-  h = blockFloor(h);
   var $game = $('#game');
-  $game.width(w).height(h);
+  $game.width(WINDOW_W).height(WINDOW_H);
 
   $game.on('click', function (e) {
     console.log(coordsOf(e, $(this)));
