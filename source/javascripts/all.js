@@ -15,6 +15,7 @@ $(document).ready(function () {
   var music = document.getElementById('music');
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
+  var bases = new Bases($game);
 
   $game.width(WINDOW_W).height(WINDOW_H);
 
@@ -33,9 +34,13 @@ $(document).ready(function () {
         roadNetwork.addRoad(new Road($game, coords));
       }
     // Base Phase
-    } else if (!roadNetwork.coordsOnRoad(coords)) {
-      new Base($game, coords); // TODO more here
-      console.log('create spawn bases');
+    } else if (bases.count() < 2) {
+      if (!roadNetwork.coordsOnRoad(coords)) {
+        bases.spawn(coords);
+      }
+    // Move-In Phase
+    } else {
+      // 
     }
   });
 
