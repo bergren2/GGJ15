@@ -47,10 +47,14 @@ function Base ($game, coords, color, expandTo) {
   }
 
   if (coords.grid[1] > expandTo.grid[1]) {
-    $dom.css('top', expandTo.grid[1] + P);
-    $dom.height(coords.grid[1] - expandTo.grid[1]);
+    window.setTimeout(function () {
+      $dom.css('top', expandTo.grid[1] + P)
+          .height(coords.grid[1] - expandTo.grid[1]);
+    }, DELAY);
   } else {
-    $dom.height(expandTo.grid[1] - coords.grid[1]);
+    window.setTimeout(function () {
+      $dom.height(expandTo.grid[1] - coords.grid[1]);
+    }, DELAY);
   }
 
   // methods

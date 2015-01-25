@@ -33,7 +33,7 @@ function RoadNetwork ($game) {
     return that.getRoads().length;
   };
 
-  this.nearestRoad = function(coords) {
+  this.getRoadsArray = function () {
     var i, rCoords = [[],[]];
     for (i = 0; i < roads.length; i++) {
       if (roads[i].getDirection() === 0) {
@@ -45,7 +45,15 @@ function RoadNetwork ($game) {
     rCoords[0].sort();
     rCoords[1].sort();
 
-    var j, returnCoords = [0, 0], range = [[0], [0]];
+    return rCoords;
+  };
+
+  this.nearestRoad = function (coords) {
+    var rCoords = that.getRoadsArray();
+
+    var j,
+        returnCoords = [0, 0],
+        range = [[0], [0]];
     for (j = 0; j < range.length; j++) {
       for (i = 0; i < rCoords[j].length; i++) {
         if (range[j].length !== 3 && coords.grid[j] > rCoords[j][i]) {
