@@ -15,6 +15,7 @@ $(document).ready(function () {
   var music = document.getElementById('music');
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
+  var cars = new Cars($game, roadNetwork);
   var bases = new Bases($game, roadNetwork);
   tests = new Tests($game);
 
@@ -24,6 +25,16 @@ $(document).ready(function () {
   if (isSoundOn) {
     music.play();
   }
+
+  // game loop
+  (function () {
+    function main(tFrame) {
+      $game.stopMain = window.requestAnimationFrame(main);
+    }
+
+    main(); // Start the cycle
+  })();
+
 
   // events
   $game.on('click', function (e) {
@@ -45,9 +56,15 @@ $(document).ready(function () {
       if (!roadNetwork.coordsOnRoad(coords)) {
         bases.spawn(coords);
       }
+
+      if (bases.count() === 2) {
+        window.setTimeout(function () {
+          cars.spawn();
+        }, DELAY * 3); // NOTE hardcodez
+      }
     // Move-In Phase
     } else {
-      console.log('move-in phase');
+      cars.moveCurrentCarTo(coords);
     }
   });
 

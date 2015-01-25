@@ -18,6 +18,23 @@
   transition: height 1s linear, width 1s linear, top 1s linear, left 1s linear;
 }
 
+.block {
+  border-width: 0;
+  border-color: #ccc;
+  border-style: solid;
+  box-sizing: border-box;
+  transition: border-width 0.5s linear;
+}
+
+.block.gone {
+  border-color: white;
+  border-width: 10px;
+}
+
+.car {
+  border-width: 5px;
+}
+
 .cab {
   background: yellow;
 }

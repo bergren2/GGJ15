@@ -33,6 +33,7 @@ function RoadNetwork ($game) {
     return that.getRoads().length;
   };
 
+  // GREAT NAME
   this.getRoadsArray = function () {
     var i, rCoords = [[],[]];
     for (i = 0; i < roads.length; i++) {

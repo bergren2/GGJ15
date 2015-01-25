@@ -35,6 +35,7 @@ function Tests ($game) {
       that.areRunning = false;
       that.stepNumber = 0;
     }
+    console.log('yeah!');
   };
 }
 

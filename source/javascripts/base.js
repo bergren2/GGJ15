@@ -39,6 +39,7 @@ function Base ($game, coords, color, expandTo) {
   $game.append($dom);
 
   // animate
+  // TODO please refactor me
   if (coords.grid[0] > expandTo.grid[0]) {
     window.setTimeout(function () {
       $dom.css('left', expandTo.grid[0] + P)
