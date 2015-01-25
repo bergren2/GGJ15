@@ -102,21 +102,25 @@ function Car ($game, coords) {
       if (ranges[0][0] - coords[0] === P &&
           coords[1] >= ranges[1][0] &&
           coords[1] <= ranges[1][1]) {
+        that.moving = true;
         that.getDom().animate({left: '+=' + P}, callback);
       // car is right of base
       } else if (coords[0] - ranges[0][1] === P &&
           coords[1] >= ranges[1][0] &&
           coords[1] <= ranges[1][1]) {
+        that.moving = true;
         that.getDom().animate({left: '-=' + P}, callback);
       // car is above base
       } else if (ranges[1][0] - coords[1] === P &&
           coords[0] >= ranges[0][0] &&
           coords[0] <= ranges[0][1]) {
+        that.moving = true;
         that.getDom().animate({top: '+=' + P}, callback);
       // car is below base
       } else if (coords[1] - ranges[1][0] === P &&
           coords[0] >= ranges[0][0] &&
           coords[0] <= ranges[0][1]) {
+        that.moving = true;
         that.getDom().animate({top: '-=' + P}, callback);
       }
     }

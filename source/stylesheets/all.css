@@ -50,8 +50,23 @@ body {
   transition: border-width 0.5s linear;
 }
 
-.block.gone {
-  border-color: white;
+.block.blue {
+  border-color: #00a;
+  background: #ccc;
+}
+
+.block.red {
+  border-color: #a00;
+  background: #ccc;
+}
+
+.blue.gone {
+  border-color: #00a;
+  border-width: 10px;
+}
+
+.red.gone {
+  border-color: #a00;
   border-width: 10px;
 }
 
