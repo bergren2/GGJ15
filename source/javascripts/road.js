@@ -62,10 +62,44 @@ function RoadNetwork ($game) {
     return rCoords;
   };
 
+  this.surroundingRoads = function (coords) {
+    // taken from nearestRoad, yelp
+    var rCoords = that.getRoadsArray();
+
+    var i, j,
+        returnRanges = [[0, $game.width()], [0, $game.height()]],
+        range = [[0], [0]];
+    for (j = 0; j < range.length; j++) {
+      for (i = 0; i < rCoords[j].length; i++) {
+        if (range[j].length !== 3 && coords.grid[j] > rCoords[j][i]) {
+          if (i === rCoords[j].length - 1) {
+            range[j].push(rCoords[j][i]);
+          } else if (coords.grid[j] < rCoords[j][i + 1]) {
+            range[j].push(rCoords[j][i]);
+            range[j].push(rCoords[j][i + 1]);
+          }
+        }
+      }
+
+      if (range[j].length === 1) {
+        returnRanges[j][1] = rCoords[j][0];
+      } else {
+        if (range[j].length === 3 && range[j][0] === 0) {
+          range[j].splice(0, 1);
+        }
+
+        returnRanges[j][0] = range[j][0];
+        returnRanges[j][1] = range[j][1];
+      }
+    }
+
+    return returnRanges;
+  };
+
   this.nearestRoad = function (coords) {
     var rCoords = that.getRoadsArray();
 
-    var j,
+    var i, j,
         returnCoords = [0, 0],
         range = [[0], [0]];
     for (j = 0; j < range.length; j++) {

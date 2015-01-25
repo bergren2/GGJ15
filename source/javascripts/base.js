@@ -36,12 +36,26 @@ function Bases ($game, roadNetwork) {
   };
 
   this.spawn = function (coords) {
-    var n = Math.floor(Math.random() * toChooseFrom.length);
-    var color = toChooseFrom.splice(n, 1)[0];
-    var expandTo = roadNetwork.nearestRoad(coords);
-    var base = new Base($game, coords, color, expandTo);
-    bases.push(base);
-    return base;
+    // check if a base is already there
+    var b, i, r, noBasesInQuadrant = true;
+    var bases = $game.bases.getBases();
+    var ranges = roadNetwork.surroundingRoads(coords);
+    for (i = 0; i < bases.length; i++) {
+      b = bases[i];
+      r = b.getRanges();
+      if (r[0][0] > ranges[0][0] && r[0][1] < ranges[0][1] &&
+          r[1][0] > ranges[1][0] && r[1][1] < ranges[1][1]) {
+        noBasesInQuadrant = false;
+      }
+    }
+    if (noBasesInQuadrant) {
+      var n = Math.floor(Math.random() * toChooseFrom.length);
+      var color = toChooseFrom.splice(n, 1)[0];
+      var expandTo = roadNetwork.nearestRoad(coords);
+      var base = new Base($game, coords, color, expandTo);
+      bases.push(base);
+      return base;
+    }
   };
 }
 
