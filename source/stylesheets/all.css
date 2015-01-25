@@ -3,10 +3,16 @@
 #game {
   background: white;
   position: fixed;
+  cursor: default;
 }
 
 #game > div {
   position: fixed;
+  cursor: default;
+}
+
+.hover {
+  cursor: pointer !important;
 }
 
 .road {

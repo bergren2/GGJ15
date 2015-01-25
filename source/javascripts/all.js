@@ -19,7 +19,7 @@ $(document).ready(function () {
   var bases = new Bases($game, roadNetwork);
   tests = new Tests($game);
 
-  $game.width(WINDOW_W).height(WINDOW_H);
+  $game.width(WINDOW_W).height(WINDOW_H).addClass('hover');
 
   // music
   if (isSoundOn) {
@@ -27,6 +27,7 @@ $(document).ready(function () {
   }
 
   // game loop
+  // TODO do we even need this?
   (function () {
     function main(tFrame) {
       $game.stopMain = window.requestAnimationFrame(main);
@@ -39,6 +40,7 @@ $(document).ready(function () {
   // events
   $game.on('click', function (e) {
     var coords;
+    // for test harness
     if (isNaN(e.clientX)) {
       coords = tests.pointer;
     } else {
@@ -46,7 +48,7 @@ $(document).ready(function () {
     }
 
     // Road Phase
-    if (roadNetwork.size() < 7 ) {
+    if (roadNetwork.size() < 7) {
       if (!roadNetwork.coordsOnRoad(coords) && !bases.isABase(coords)) {
         roadNetwork.addRoad(new Road($game, coords));
       }
@@ -61,6 +63,9 @@ $(document).ready(function () {
         window.setTimeout(function () {
           cars.spawn();
         }, DELAY * 3); // NOTE hardcodez
+
+        $game.removeClass('hover');
+        $('.road').addClass('hover');
       }
     // Move-In Phase
     } else {

@@ -17,7 +17,7 @@ function Tests ($game) {
     },
     // lay bases
     function () {
-      if (false) {
+      if (true) {
         that.pointer = new Coords([150, 150]);
         $game.click();
         that.pointer = new Coords([250, 250]);
