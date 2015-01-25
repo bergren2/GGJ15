@@ -48,10 +48,10 @@ function RoadNetwork ($game) {
     var j, returnCoords = [0, 0], range = [[0], [0]];
     for (j = 0; j < range.length; j++) {
       for (i = 0; i < rCoords[j].length; i++) {
-        if (range[j].length !== 3 && coords.grid[0] > rCoords[j][i]) {
+        if (range[j].length !== 3 && coords.grid[j] > rCoords[j][i]) {
           if (i === rCoords[j].length - 1) {
             range[j].push(rCoords[j][i]);
-          } else if (coords.grid[0] < rCoords[j][i + 1]) {
+          } else if (coords.grid[j] < rCoords[j][i + 1]) {
             range[j].push(rCoords[j][i]);
             range[j].push(rCoords[j][i + 1]);
           }
@@ -65,8 +65,8 @@ function RoadNetwork ($game) {
           range[j].splice(0, 1);
         }
 
-        var dist1 = coords.grid[0] - range[j][0],
-            dist2 = range[j][1] - coords.grid[0];
+        var dist1 = coords.grid[j] - range[j][0],
+            dist2 = range[j][1] - coords.grid[j];
         if (dist1 < dist2) {
           returnCoords[j] = range[j][0];
         } else {
