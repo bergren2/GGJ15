@@ -47,7 +47,7 @@ function Cars ($game, roadNetwork) {
         car.getDom().animate(instr, Math.abs(diff * 5), 'linear', function () {
           car.updateLocation(coords.grid);
           car.moving = false;
-          car.checkBase();
+          car.checkBase(coords.grid);
         });
       }
     }
@@ -71,6 +71,7 @@ function Cars ($game, roadNetwork) {
 }
 
 function Car ($game, coords) {
+  var that = this;
   var color = ['red', 'blue'][Math.floor(Math.random() * 2)]; // this will prolly change later
   var currentLocation = coords.grid;
   this.moving = false;
@@ -80,8 +81,54 @@ function Car ($game, coords) {
              .css('left', coords.grid[0]).css('top', coords.grid[1]);
   $game.append($dom);
 
-  this.checkBase = function () {
+  // methods
+  this.checkBase = function (coords) {
+    // find base
+    bases = $game.bases.getBases();
+    var callback = function () {
+      that.getDom().addClass('gone');
+      $game.cars.spawn();
+    };
+
+    var i, ranges;
+    for (i = 0; i < bases.length; i++) {
+      if (bases[i].getColor() !== that.getColor()) {
+        continue;
+      }
+      ranges = bases[i].getRanges();
+
+      // TODO almost, need to check rest of range
+      // car is left of base
+      if (ranges[0][0] - coords[0] === P &&
+          coords[1] >= ranges[1][0] &&
+          coords[1] <= ranges[1][1]) {
+        that.getDom().animate({left: '+=' + P}, callback);
+      // car is right of base
+      } else if (coords[0] - ranges[0][1] === P &&
+          coords[1] >= ranges[1][0] &&
+          coords[1] <= ranges[1][1]) {
+        that.getDom().animate({left: '-=' + P}, callback);
+      // car is above base
+      } else if (ranges[1][0] - coords[1] === P &&
+          coords[0] >= ranges[0][0] &&
+          coords[0] <= ranges[0][1]) {
+        that.getDom().animate({top: '+=' + P}, callback);
+      // car is below base
+      } else if (coords[1] - ranges[1][0] === P &&
+          coords[0] >= ranges[0][0] &&
+          coords[0] <= ranges[0][1]) {
+        that.getDom().animate({top: '-=' + P}, callback);
+      }
+    }
+
+    // move piece
+
+    // reduce base
     return true;
+  };
+
+  this.getColor = function () {
+    return color;
   };
 
   this.getDom = function () {

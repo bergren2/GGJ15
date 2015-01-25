@@ -16,8 +16,8 @@ $(document).ready(function () {
   var creditsShown = true;
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
-  var cars = new Cars($game, roadNetwork);
-  var bases = new Bases($game, roadNetwork);
+  $game.cars = new Cars($game, roadNetwork);
+  $game.bases = new Bases($game, roadNetwork); // should've done this a long time ago
   tests = new Tests($game);
 
   $game.width(WINDOW_W).height(WINDOW_H);
@@ -69,7 +69,7 @@ $(document).ready(function () {
     if (roadNetwork.size() < 7) {
       if (!roadNetwork.coordsOnRoad(coords) &&
           !roadNetwork.coordsNextToRoad(coords) &&
-          !bases.isABase(coords)) {
+          !$game.bases.isABase(coords)) {
         var roads = roadNetwork.getRoads();
         var i, sum = 0;
         for (i = 0; i < roads.length; i++) {
@@ -87,15 +87,15 @@ $(document).ready(function () {
         }
       }
     // Base Phase
-    } else if (bases.count() < 2) {
+    } else if ($game.bases.count() < 2) {
       // TODO check if in same quadrant as other bases
       if (!roadNetwork.coordsOnRoad(coords)) {
-        bases.spawn(coords);
+        $game.bases.spawn(coords);
       }
 
-      if (bases.count() === 2) {
+      if ($game.bases.count() === 2) {
         window.setTimeout(function () {
-          cars.spawn();
+          $game.cars.spawn();
         }, DELAY * 3); // NOTE hardcodez
 
         $game.removeClass('hover');
@@ -103,7 +103,7 @@ $(document).ready(function () {
       }
     // Move-In Phase
     } else {
-      cars.moveCurrentCarTo(coords);
+      $game.cars.moveCurrentCarTo(coords);
     }
   });
 

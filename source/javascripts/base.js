@@ -13,6 +13,10 @@ function Bases ($game, roadNetwork) {
     }
   }
 
+  this.getBases = function () {
+    return bases;
+  };
+
   this.count = function () {
     return bases.length;
   };
@@ -35,6 +39,9 @@ function Base ($game, coords, color, expandTo) {
   var $dom = $('<div></div>').addClass('base').addClass(color)
                .width(P).height(P)
                .css('left', coords.grid[0]).css('top', coords.grid[1]);
+  var ranges = [[0,0],[0,0]];
+  var that = this;
+  var c = color;
 
   $game.append($dom);
 
@@ -46,10 +53,13 @@ function Base ($game, coords, color, expandTo) {
           .width(coords.grid[0] - expandTo.grid[0]);
     }, DELAY);
 
+    ranges[0] = [expandTo.grid[0] + P, coords.grid[0]];
   } else {
     window.setTimeout(function () {
       $dom.width(expandTo.grid[0] - coords.grid[0]);
     }, DELAY);
+
+    ranges[0] = [coords.grid[0], expandTo.grid[0] - P];
   }
 
   if (coords.grid[1] > expandTo.grid[1]) {
@@ -57,14 +67,34 @@ function Base ($game, coords, color, expandTo) {
       $dom.css('top', expandTo.grid[1] + P)
           .height(coords.grid[1] - expandTo.grid[1]);
     }, DELAY);
+
+    ranges[1] = [expandTo.grid[1] + P, coords.grid[0]];
   } else {
     window.setTimeout(function () {
       $dom.height(expandTo.grid[1] - coords.grid[1]);
     }, DELAY);
+
+    ranges[1] = [coords.grid[1], expandTo.grid[1] - P];
   }
 
   // methods
+  this.getColor = function () {
+    return c;
+  };
+
   this.getDom = function () {
     return $dom;
+  };
+
+  this.getRanges = function () {
+    return ranges;
+  };
+
+  this.reduce = function () {
+    if (ranges[0][0] !== ranges[0][1]) {
+      ranges[0][1] -= P;
+      var dom = that.getDom();
+      dom.width(dom.width() - P);
+    }
   };
 }
