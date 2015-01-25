@@ -6,20 +6,34 @@ var P = 20,            // block width in pixels
     DELAY = 500,       // delay of animations in milliseconds
     WINDOW_W = null,   // window width
     WINDOW_H = null,   // window height
-    isSoundOn = false; // default
+    isSoundOn = true;  // default
 
 // load the game
 $(document).ready(function () {
   WINDOW_W = blockCeil($(document).width());
   WINDOW_H = blockCeil($(document).height());
   var music = document.getElementById('music');
+  var creditsShown = true;
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
   var cars = new Cars($game, roadNetwork);
   var bases = new Bases($game, roadNetwork);
   tests = new Tests($game);
 
-  $game.width(WINDOW_W).height(WINDOW_H).addClass('hover');
+  $game.width(WINDOW_W).height(WINDOW_H);
+
+  // intro
+  if (creditsShown) {
+    $('#credits').fadeIn(2000, function () {
+      $(this).addClass('hover');
+      $(this).on('click', function () {
+        var $this = $(this);
+        creditsShown = false;
+        $game.addClass('hover');
+        $this.fadeOut(500).unbind('click');
+      });
+    });
+  }
 
   // music
   if (isSoundOn) {
@@ -39,6 +53,10 @@ $(document).ready(function () {
 
   // events
   $game.on('click', function (e) {
+    if (creditsShown) {
+     return;
+    }
+
     var coords;
     // for test harness
     if (isNaN(e.clientX)) {
