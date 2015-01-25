@@ -16,13 +16,26 @@ function RoadNetwork ($game) {
     return roads;
   };
 
-  this.coordsOnRoad = function (realCoords) {
+  this.coordsOnRoad = function (mouseCoords) {
     var c, d, i;
     for (i = 0; i < roads.length; i++) {
       c = roads[i].getCoords();
       d = roads[i].getDirection();
-      if (d === 0 && c[1] === realCoords.grid[1] ||
-          d === 1 && c[0] === realCoords.grid[0]) {
+      if (d === 0 && c[1] === mouseCoords.grid[1] ||
+          d === 1 && c[0] === mouseCoords.grid[0]) {
+        return true; // above not quite right
+      }
+    }
+    return false;
+  };
+
+  this.coordsNextToRoad = function (mouseCoords) {
+    var c, d, i;
+    for (i = 0; i < roads.length; i++) {
+      c = roads[i].getCoords();
+      d = roads[i].getDirection();
+      if (d === 0 && Math.abs(c[1] - mouseCoords.grid[1]) === P ||
+          d === 1 && Math.abs(c[0] - mouseCoords.grid[0]) === P) {
         return true; // above not quite right
       }
     }
@@ -89,9 +102,9 @@ function RoadNetwork ($game) {
   };
 }
 
-function Road ($game, coords) {
+function Road ($game, coords, dir) {
   // 0 is horizontal, 1 is vertical
-  var direction = Math.floor(Math.random() * 2);
+  var direction = dir || Math.floor(Math.random() * 2);
   var gridCoords = coords.grid;
 
   var $dom = $('<div></div>').addClass('road')

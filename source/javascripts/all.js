@@ -49,8 +49,24 @@ $(document).ready(function () {
 
     // Road Phase
     if (roadNetwork.size() < 7) {
-      if (!roadNetwork.coordsOnRoad(coords) && !bases.isABase(coords)) {
-        roadNetwork.addRoad(new Road($game, coords));
+      if (!roadNetwork.coordsOnRoad(coords) &&
+          !roadNetwork.coordsNextToRoad(coords) &&
+          !bases.isABase(coords)) {
+        var roads = roadNetwork.getRoads();
+        var i, sum = 0;
+        for (i = 0; i < roads.length; i++) {
+          sum += roads[i].getDirection();
+        }
+
+        // all horizontal
+        if (sum === 0) {
+          roadNetwork.addRoad(new Road($game, coords, 1));
+        // all vertical
+        } else if (sum === roads.length) {
+          roadNetwork.addRoad(new Road($game, coords, 0));
+        } else {
+          roadNetwork.addRoad(new Road($game, coords));
+        }
       }
     // Base Phase
     } else if (bases.count() < 2) {

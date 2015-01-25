@@ -44,7 +44,7 @@ function Cars ($game, roadNetwork) {
       // if true, select "current" car and move towards coords
       if (!!dest && !car.moving) {
         car.moving = true;
-        car.getDom().animate(instr, function () {
+        car.getDom().animate(instr, Math.abs(diff * 5), 'linear', function () {
           car.updateLocation(coords.grid);
           car.moving = false;
           car.checkBase();
