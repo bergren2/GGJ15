@@ -97,7 +97,6 @@ function Car ($game, coords) {
       }
       ranges = bases[i].getRanges();
 
-      console.log('huh', ranges, coords);
       // TODO almost, need to check rest of range
       // car is left of base
       if (ranges[0][0] - coords[0] === P &&
