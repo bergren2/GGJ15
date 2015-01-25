@@ -104,7 +104,12 @@ function RoadNetwork ($game) {
 
 function Road ($game, coords, dir) {
   // 0 is horizontal, 1 is vertical
-  var direction = dir || Math.floor(Math.random() * 2);
+  var direction;
+  if (typeof dir === 'undefined') {
+    direction = Math.floor(Math.random() * 2);
+  } else {
+    direction = dir;
+  }
   var gridCoords = coords.grid;
 
   var $dom = $('<div></div>').addClass('road')
