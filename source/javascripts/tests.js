@@ -6,15 +6,21 @@ function Tests ($game) {
   this.areRunning = false;
 
   var tests = [
+    // lay roads
     function () {
-      var i;
+      var i, x = 100;
       for (i = 0; i < 7; i++) {
-        that.pointer = getRandomCoords();
+        that.pointer = new Coords([x, x]);
         $game.click();
+        x += 100;
       }
     },
+    // lay bases
     function () {
-      console.log('tests are done!');
+      that.pointer = new Coords([150, 150]);
+      $game.click();
+      that.pointer = new Coords([250, 250]);
+      $game.click();
     }
   ];
 
