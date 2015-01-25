@@ -40,10 +40,15 @@ function Base ($game, coords, color, expandTo) {
 
   // animate
   if (coords.grid[0] > expandTo.grid[0]) {
-    $dom.css('left', expandTo.grid[0] + P);
-    $dom.width(coords.grid[0] - expandTo.grid[0]);
+    window.setTimeout(function () {
+      $dom.css('left', expandTo.grid[0] + P)
+          .width(coords.grid[0] - expandTo.grid[0]);
+    }, DELAY);
+
   } else {
-    $dom.width(expandTo.grid[0] - coords.grid[0]);
+    window.setTimeout(function () {
+      $dom.width(expandTo.grid[0] - coords.grid[0]);
+    }, DELAY);
   }
 
   if (coords.grid[1] > expandTo.grid[1]) {
