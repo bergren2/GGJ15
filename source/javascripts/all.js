@@ -15,7 +15,7 @@ $(document).ready(function () {
   var music = document.getElementById('music');
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
-  var bases = new Bases($game);
+  var bases = new Bases($game, roadNetwork);
   tests = new Tests($game);
 
   $game.width(WINDOW_W).height(WINDOW_H);
@@ -47,7 +47,7 @@ $(document).ready(function () {
       }
     // Move-In Phase
     } else {
-      console.log(roadNetwork.nearestRoad([0, 0]));
+      console.log('move-in phase');
     }
   });
 

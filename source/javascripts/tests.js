@@ -17,10 +17,12 @@ function Tests ($game) {
     },
     // lay bases
     function () {
-      that.pointer = new Coords([150, 150]);
-      $game.click();
-      that.pointer = new Coords([250, 250]);
-      $game.click();
+      if (false) {
+        that.pointer = new Coords([150, 150]);
+        $game.click();
+        that.pointer = new Coords([250, 250]);
+        $game.click();
+      }
     }
   ];
 
