@@ -21,3 +21,9 @@ function coordsOf (e, $el) {
   var y = e.clientY - offset.top;
   return new Coords([x, y]);
 }
+
+function getRandomCoords () {
+  var x = Math.floor(Math.random() * (WINDOW_W - P));
+  var y = Math.floor(Math.random() * (WINDOW_H - P));
+  return new Coords([x, y]);
+}

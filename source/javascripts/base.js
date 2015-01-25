@@ -17,6 +17,10 @@ function Bases ($game) {
     return bases.length;
   };
 
+  this.isABase = function (coords) {
+    return false; // TODO stubbed, this is more complicated
+  };
+
   this.spawn = function (coords) {
     var n = Math.floor(Math.random() * toChooseFrom.length);
     var color = toChooseFrom.splice(n, 1)[0];

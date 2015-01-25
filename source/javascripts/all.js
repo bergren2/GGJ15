@@ -16,6 +16,7 @@ $(document).ready(function () {
   var $game = $('#game');
   var roadNetwork = new RoadNetwork($game);
   var bases = new Bases($game);
+  tests = new Tests($game);
 
   $game.width(WINDOW_W).height(WINDOW_H);
 
@@ -26,21 +27,27 @@ $(document).ready(function () {
 
   // events
   $game.on('click', function (e) {
-    var coords = coordsOf(e, $(this));
+    var coords;
+    if (isNaN(e.clientX)) {
+      coords = tests.pointer;
+    } else {
+      coords = coordsOf(e, $(this));
+    }
 
     // Road Phase
     if (roadNetwork.size() < 7 ) {
-      if (!roadNetwork.coordsOnRoad(coords)) {
+      if (!roadNetwork.coordsOnRoad(coords) && !bases.isABase(coords)) {
         roadNetwork.addRoad(new Road($game, coords));
       }
     // Base Phase
     } else if (bases.count() < 2) {
+      // TODO check if in same quadrant as other bases
       if (!roadNetwork.coordsOnRoad(coords)) {
         bases.spawn(coords);
       }
     // Move-In Phase
     } else {
-      // 
+      console.log(roadNetwork.nearestRoad([0, 0]));
     }
   });
 

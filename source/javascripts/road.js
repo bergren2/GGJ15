@@ -32,9 +32,26 @@ function RoadNetwork ($game) {
   this.size = function () {
     return that.getRoads().length;
   };
+
+  this.nearestRoad = function(coords) {
+    var i, roadCoords = [[], []];
+    // grab x coords of roads
+    for (i = 0; i < roads.length; i++) {
+      if (roads[i].getDirection()) {
+        roadCoords[1].push(roads[i].getCoords()[1]);
+      } else {
+        roadCoords[0].push(roads[i].getCoords()[0]);
+      }
+    }
+    roadCoords[0].sort();
+    roadCoords[1].sort();
+
+    // pick nearest road and return coords
+  };
 }
 
 function Road ($game, coords) {
+  // 0 is horizontal, 1 is vertical
   var direction = Math.floor(Math.random() * 2);
   var gridCoords = coords.grid;
 
