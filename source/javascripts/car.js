@@ -72,7 +72,8 @@ function Cars ($game, roadNetwork) {
 
 function Car ($game, coords) {
   var that = this;
-  var color = ['red', 'blue'][Math.floor(Math.random() * 2)]; // this will prolly change later
+  var bases = $game.bases.getBases();
+  var color = bases[Math.floor(Math.random() * bases.length)].getColor();
   var currentLocation = coords.grid;
   this.moving = false;
 
@@ -84,10 +85,17 @@ function Car ($game, coords) {
   // methods
   this.checkBase = function (coords) {
     // find base
-    bases = $game.bases.getBases();
-    var callback = function () {
+    var bases = $game.bases.getBases();
+    var callback = function (base) {
       that.getDom().addClass('gone');
-      $game.cars.spawn();
+      setTimeout(function () {
+        that.getDom().hide();
+        base.reduce(function () {
+          if ($game.bases.getBases().length === 2) {
+            $game.cars.spawn();
+          }
+        });
+      }, DELAY);
     };
 
     var i, ranges;
@@ -103,25 +111,25 @@ function Car ($game, coords) {
           coords[1] >= ranges[1][0] &&
           coords[1] <= ranges[1][1]) {
         that.moving = true;
-        that.getDom().animate({left: '+=' + P}, callback);
+        that.getDom().animate({left: '+=' + P}, callback(bases[i]));
       // car is right of base
       } else if (coords[0] - ranges[0][1] === P &&
           coords[1] >= ranges[1][0] &&
           coords[1] <= ranges[1][1]) {
         that.moving = true;
-        that.getDom().animate({left: '-=' + P}, callback);
+        that.getDom().animate({left: '-=' + P}, callback(bases[i]));
       // car is above base
       } else if (ranges[1][0] - coords[1] === P &&
           coords[0] >= ranges[0][0] &&
           coords[0] <= ranges[0][1]) {
         that.moving = true;
-        that.getDom().animate({top: '+=' + P}, callback);
+        that.getDom().animate({top: '+=' + P}, callback(bases[i]));
       // car is below base
       } else if (coords[1] - ranges[1][1] === P &&
           coords[0] >= ranges[0][0] &&
           coords[0] <= ranges[0][1]) {
         that.moving = true;
-        that.getDom().animate({top: '-=' + P}, callback);
+        that.getDom().animate({top: '-=' + P}, callback(bases[i]));
       }
     }
 

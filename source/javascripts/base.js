@@ -14,6 +14,16 @@ function Bases ($game, roadNetwork) {
   }
 
   this.getBases = function () {
+    // garbage clean first
+    var i;
+    for (i =0; i < bases.length; i++) {
+      if (bases[i].toRemove) {
+        toChooseFrom.push(bases[i].getColor());
+        bases.splice(i, 1);
+        $game.addClass('hover');
+        $('.road').removeClass('hover');
+      }
+    }
     return bases;
   };
 
@@ -42,6 +52,7 @@ function Base ($game, coords, color, expandTo) {
   var ranges = [[0,0],[0,0]];
   var that = this;
   var c = color;
+  this.toRemove = false;
 
   $game.append($dom);
 
@@ -90,11 +101,15 @@ function Base ($game, coords, color, expandTo) {
     return ranges;
   };
 
-  this.reduce = function () {
-    if (ranges[0][0] !== ranges[0][1]) {
+  this.reduce = function (callback) {
+    if (ranges[0][0] === ranges[0][1]) {
+      that.getDom().width(0);
+      that.toRemove = true;
+    } else {
       ranges[0][1] -= P;
       var dom = that.getDom();
       dom.width(dom.width() - P);
     }
+    callback();
   };
 }
