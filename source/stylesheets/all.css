@@ -15,7 +15,7 @@
 }
 
 .base {
-  transition: height 1s ease-out, width 1s ease-out, top 1s ease-out, left 1s ease-out;
+  transition: height 1s linear, width 1s linear, top 1s linear, left 1s linear;
 }
 
 .cab {
@@ -23,13 +23,13 @@
 }
 
 .blue {
-  background: blue;
+  background: #00a;
 }
 
 .red {
-  background: red;
+  background: #a00;
 }
 
 .yellow {
-  background: yellow;
+  background: #cc0;
 }
