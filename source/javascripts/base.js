@@ -46,7 +46,6 @@ function Base ($game, coords, color, expandTo) {
     $dom.width(expandTo.grid[0] - coords.grid[0]);
   }
 
-  console.log(coords.grid, expandTo.grid);
   if (coords.grid[1] > expandTo.grid[1]) {
     $dom.css('top', expandTo.grid[1] + P);
     $dom.height(coords.grid[1] - expandTo.grid[1]);
