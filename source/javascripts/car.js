@@ -97,6 +97,7 @@ function Car ($game, coords) {
       }
       ranges = bases[i].getRanges();
 
+      console.log('huh', ranges, coords);
       // TODO almost, need to check rest of range
       // car is left of base
       if (ranges[0][0] - coords[0] === P &&
@@ -117,7 +118,7 @@ function Car ($game, coords) {
         that.moving = true;
         that.getDom().animate({top: '+=' + P}, callback);
       // car is below base
-      } else if (coords[1] - ranges[1][0] === P &&
+      } else if (coords[1] - ranges[1][1] === P &&
           coords[0] >= ranges[0][0] &&
           coords[0] <= ranges[0][1]) {
         that.moving = true;
